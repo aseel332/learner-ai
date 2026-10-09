@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Learner AI
 
-## Getting Started
+An AI study companion for students. Learner AI sets up a personalized workspace for each course you're taking, so it can track progress, deadlines and study time, and plan your week around your target grades.
 
-First, run the development server:
+## Status
+
+Early development. Implemented so far:
+
+- **Authentication:** email sign-up and login with Supabase Auth, OAuth callback route, protected routes and middleware.
+- **Onboarding flow:** a guided, multi-step setup that captures who you are (school, research, work or personal), your plan, and your courses.
+- **Course setup:** name, subject, instructor, term, weekly schedule and target grade for each course.
+- **Data model:** user profiles with study preferences (weekly study hours, timezone, target grade), subscription plans, and courses that track progress, pending tasks, materials and upcoming deadlines.
+
+Next up: the course dashboard, material uploads and the AI study planner.
+
+## Tech stack
+
+Next.js (App Router), React, TypeScript, Tailwind CSS, Supabase (Postgres, Auth)
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/aseel332/learner-ai.git
+cd learner-ai
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create `.env.local`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Apply the schema in `supabase/migrations`, then run `npm run dev` and open http://localhost:3000.
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/          (auth) login & signup, (onboarding) role/plan/course steps, auth callback
+  components/   auth forms, onboarding steps, protected route
+  services/     auth, user, course and onboarding data access
+  context/      auth context
+  lib/supabase/ browser, server and proxy clients
+supabase/       migrations and local config
+```
